@@ -1,8 +1,6 @@
-/*
-Treehouse Techdegree: Data Pagination and Filtering
-*/
 var linklist = document.querySelector('ul.link-list');
 const itemsPerPage = 9;
+var list = data;
 
 /******************* 
  `showPage` function
@@ -39,14 +37,6 @@ function showPage (list, page) {
          //studentList.insertAdjacentHTML('beforeend', studentItem);
       }
    }
-   // console.log(list.length);
-   // console.log(page);
-   // console.log(startIndex);
-   // console.log(endIndex);
-   // console.log(`${studentName}`);
-   // console.log(studentEmail);
-   // console.log(studentRegDate);
-   // console.log(studentItem);
 }
 
 
@@ -55,10 +45,11 @@ function showPage (list, page) {
 *************************/
 //This function will create and insert/append the elements needed for the pagination buttons
 function addPagination (list) {
+   //Determines the number of pages needed to display all objects in the array.
    var numOfPages = Math.ceil(list.length / itemsPerPage);
-   
+   //Clears page number buttons.
    linklist.innerHTML = '';
-
+   //loops creating page number buttons.
    for (let i = 1; i <= numOfPages; i++) {
       let button = document.createElement('li');
       let html = `<button type="button">${i}</button>`
@@ -71,27 +62,23 @@ function addPagination (list) {
 /***************************
  'pageClick' Event Listener
  **************************/
-//Places an click event listener to the page buttons.
+//Places an click event listener on the page number buttons.
 linklist.addEventListener('click', function (e) {
       
    let clickedBtn = e.target;
+      //Checks if element is a button.
       if (clickedBtn.tagName === 'BUTTON') {
+         //Removes active class from current page.
          document.querySelector('.active').className = '';
+         //Adds active class to selected button
          clickedBtn.className = 'active';
          let pageNumber = clickedBtn.textContent;
-         showPage(data, pageNumber)
+         //Passes selected page number into `showPage` function and calls it.
+         showPage(list, pageNumber)
       }
 });
 
 
-
-
-
-
-
-
-
-
 // Call functions
-showPage(data,1);
-addPagination(data);
+showPage(list,1);
+addPagination(list);
