@@ -1,6 +1,9 @@
 var linklist = document.querySelector('ul.link-list');
 const itemsPerPage = 9;
 var list = data;
+var searchBar = document.createElement('label');
+var header = document.querySelector('header.header');
+var searchResults = [];  
 
 /******************* 
  `showPage` function
@@ -78,7 +81,47 @@ linklist.addEventListener('click', function (e) {
       }
 });
 
+/****************************
+ *`createSearchBar` function
+ ****************************/
+function createSearchBar () {
+   searchBar.classList.add('student-search');
+   searchBar.htmlFor = 'search';
+   let html = `<label for="search" class="student-search">
+      <span>Search by name</span>
+      <input id="search" placeholder="Search by name...">
+      <button id="search-button" type="button"><img src="img/icn-search.svg" alt="Search icon"></button>
+      </label>`;
+   searchBar.innerHTML = html;
+   return header.append(searchBar);
+}
 
-// Call functions
+/***************************
+ * `searchStudents` function
+ **************************/
+//Searches the `list` array for a match
+function searchStudents (searchRegex) {
+   var searchFor = document.getElementById('search');
+   var searchRegex = new RegExp(searchFor.value, 'i','g');
+   var searchResults = [];  
+   //Searches `list` array for match and adds it to a new array for pagination
+   for (let i = 0; i < list.length; i++) {
+      if (list[i].name.last.match(searchRegex) || list[i].name.first.match(searchRegex) ) {
+         searchResults.push(list[i]);
+      }
+   }
+   //Loads new array of search results to pagination function
+   showPage(searchResults, 1);
+   addPagination(searchResults);
+}
+
+// Onload functions
+createSearchBar();
 showPage(list,1);
 addPagination(list);
+var searchFor = document.getElementById('search');
+var searchButton = document.getElementById('search-button');
+
+/****** Search Button Event Listener *******/
+   searchButton.addEventListener('click', searchStudents);
+
