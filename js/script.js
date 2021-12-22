@@ -37,7 +37,6 @@ function showPage (list, page) {
          studentItem.classList.add('student-item', 'cf');
          studentItem.innerHTML = html;
          studentList.append(studentItem); 
-         //studentList.insertAdjacentHTML('beforeend', studentItem);
       }
    }
 }
@@ -110,9 +109,19 @@ function searchStudents (searchRegex) {
          searchResults.push(list[i]);
       }
    }
+
+   if (searchResults.length > 0) {
    //Loads new array of search results to pagination function
    showPage(searchResults, 1);
    addPagination(searchResults);
+   } else if (searchResults.length === 0) {
+      showPage(searchResults, 1);
+      addPagination(searchResults);
+      var noMatch = document.createElement('div');
+      noMatch.className = 'no-matches';
+      noMatch.textContent = 'No matches. Please search again.';
+      linklist.append(noMatch);
+   }
 }
 
 // Onload functions
